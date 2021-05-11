@@ -1,0 +1,17 @@
+kind: KameletBinding
+apiVersion: camel.apache.org/v1alpha1
+metadata:
+  name: twitter-to-kafka
+spec:
+  source:
+    ref:
+      apiVersion: camel.apache.org/v1alpha1
+      kind: Kamelet
+      name: twitter-search-source
+    properties:
+      keywords: "#KafkaSummit"
+  sink:
+    ref:
+      apiVersion: kafka.strimzi.io/v1beta2
+      kind: KafkaTopic
+      name: tweets

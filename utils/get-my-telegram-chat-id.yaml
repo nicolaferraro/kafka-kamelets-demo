@@ -1,0 +1,17 @@
+# After you install Camel K, run this file with `kamel run get-my-telegram-chat-id.yaml -p authorizationToken=the-token` (works also with `kamel local run`).
+# Then write a message to the bot to have the chat ID in return.
+
+# camel-k: language=yaml
+
+# Write your routes here, for example:
+- from:
+    uri: "telegram:bots"
+    parameters:
+      authorizationToken: "{{authorizationToken}}"
+    steps:
+    - set-body:
+        simple: "The ID of this chat is: ${header.CamelTelegramChatId}"
+    - to:
+        uri: "telegram:bots"
+        parameters:
+          authorizationToken: "{{authorizationToken}}"

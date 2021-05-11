@@ -1,0 +1,34 @@
+kind: KameletBinding
+apiVersion: camel.apache.org/v1alpha1
+metadata:
+  name: kafka-to-telegram
+spec:
+  source:
+    ref:
+      apiVersion: kafka.strimzi.io/v1beta2
+      kind: KafkaTopic
+      name: tweets
+    properties:
+      autoOffsetReset: earliest
+  steps:
+  - ref:
+      kind: Kamelet
+      apiVersion: camel.apache.org/v1alpha1
+      name: extract-field-action
+    properties:
+      field: "text"
+  - ref:
+      kind: Kamelet
+      apiVersion: camel.apache.org/v1alpha1
+      name: hoist-field-action
+    properties:
+      field: "query"
+  - ref:
+      kind: Kamelet
+      apiVersion: camel.apache.org/v1alpha1
+      name: openai-classification-action
+  sink:
+    ref:
+      apiVersion: camel.apache.org/v1alpha1
+      kind: Kamelet
+      name: telegram-sink
