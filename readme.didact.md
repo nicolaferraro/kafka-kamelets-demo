@@ -2,6 +2,12 @@
 
 This tutorial is about using [Kamelets](https://camel.apache.org/camel-kamelets/latest/) (from Apache Camel) to connect systems to Apache Kafka.
 
+## Scenario
+
+![Scenario](utils/scenario.png)
+
+Using Kamelets from the official Apache Camel catalog, we're going to stream tweets from Twitter into Kafka, then create a consumer that processes the data to do sentiment analysis using the OpenAI platform and send the results to our Telegram chat for evaluation.
+
 ## Requirements
 
 1. An OpenShift 4.7 cluster and related `oc` (or `kubectl`) CLI
@@ -174,3 +180,5 @@ kubectl apply -f kafka-to-telegram.yaml
 ```
 ([^ execute](didact://?commandId=vscode.didact.sendNamedTerminalAString&text=newTerminal$$kubectl%20apply%20-f%20kafka-to-telegram.yaml))
 
+
+Have fun!
