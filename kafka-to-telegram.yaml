@@ -29,6 +29,6 @@ spec:
       name: openai-classification-action
   sink:
     ref:
-      apiVersion: camel.apache.org/v1alpha1
       kind: Kamelet
+      apiVersion: camel.apache.org/v1alpha1
       name: telegram-sink

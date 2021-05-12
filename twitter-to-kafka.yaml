@@ -5,8 +5,8 @@ metadata:
 spec:
   source:
     ref:
-      apiVersion: camel.apache.org/v1alpha1
       kind: Kamelet
+      apiVersion: camel.apache.org/v1alpha1
       name: twitter-search-source
     properties:
       keywords: "#KafkaSummit"
