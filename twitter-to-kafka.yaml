@@ -1,5 +1,5 @@
-kind: KameletBinding
 apiVersion: camel.apache.org/v1alpha1
+kind: KameletBinding
 metadata:
   name: twitter-to-kafka
 spec:
