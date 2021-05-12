@@ -124,21 +124,23 @@ kubectl label secrets/telegram-connection camel.apache.org/kamelet=telegram-sink
 ```
 ([^ execute](didact://?commandId=vscode.didact.sendNamedTerminalAString&text=newTerminal$$kubectl%20label%20secrets/telegram-connection%20camel.apache.org/kamelet=telegram-sink))
 
-### Get your OpenAI token (optional)
+### Get your OpenAI token
 
-TBD
+You need to have access to OpenAI (beta) to run this demo as it is.
 
-You can now create a secret containing the OpenAI properties:
+We're going to use classification, so you need to upload to OpenAI a file with classified examples, then reference the file in the openai.properties file.
+
+Once you've the token to access the OpenAI APIs and the file ID, you can create a secret containing the OpenAI properties:
 
 ```
-# remember to put the authorizationToken in the file first
+# remember to overwrite the file with the authorizationToken and the file ID first
 
 kubectl create secret generic openai-connection --from-file secrets/openai.properties
 ```
 ([^ execute](didact://?commandId=vscode.didact.sendNamedTerminalAString&text=newTerminal$$kubectl%20create%20secret%20generic%20openai-connection%20--from-file%20secrets/openai.properties))
 
 
-Now that the secret is created, you can mark it with some labels so that it's automatically picked up by Camel K when using the `telegram-sink` kamelet:
+Now that the secret is created, you can mark it with some labels so that it's automatically picked up by Camel K when using the `openai-classification-action` kamelet:
 
 ```
 kubectl label secrets/openai-connection camel.apache.org/kamelet=openai-classification-action
@@ -161,3 +163,14 @@ You can create a logging pod that connects to the cluster and look at the logs:
 ```
 kamel bind kafka.strimzi.io/v1beta2:KafkaTopic:tweets?autoOffsetReset=earliest log:info
 ```
+([^ execute](didact://?commandId=vscode.didact.sendNamedTerminalAString&text=newTerminal$$kamel%20bind%20kafka.strimzi.io/v1beta2:KafkaTopic:tweets?autoOffsetReset=earliest%20log:info))
+
+## Send sentiments to your Telegram chat
+
+You can process data using OpenAI and send the result to telegram by applying the last binding:
+
+```
+kubectl apply -f kafka-to-telegram.yaml
+```
+([^ execute](didact://?commandId=vscode.didact.sendNamedTerminalAString&text=newTerminal$$kubectl%20apply%20-f%20kafka-to-telegram.yaml))
+
